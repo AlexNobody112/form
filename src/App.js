@@ -1,29 +1,33 @@
 import React, { useState } from "react";
 import "./App.css";
+import UserForm from "./form";
 
-const UserName = ({ user }) => {
+const UserName = ({ user, index, removeUser }) => {
   return (
-    <div>
-      <h1>{user.sirname}</h1>
-      <h1>{user.name}</h1>
-      <h1>{user.patronymic}</h1>
+    <div style={{ display: "flex" }}>
+      <h1 className="app-item">{user.sirName}</h1>
+      <h1 className="app-item">{user.name}</h1>
+      <h1 className="app-item">{user.patronymic}</h1>
+      <button onClick={() => removeUser(index)} className="app-item-delete">
+        x
+      </button>
     </div>
   );
 };
 
 function App() {
+  const removeUser = (index) => {
+    const newUser = [...names];
+    newUser.splice(index, 1);
+    setNames(newUser);
+    console.log("удалено");
+  };
+
   const [names, setNames] = useState([
     {
-      sirname: "Фамилия",
-      name: "Имя",
-      patronymic: "Отчество",
-      hasForm: false,
-    },
-    {
-      sirname: "Фамилия",
-      name: "Имя",
-      patronymic: "Отчество",
-      hasForm: false,
+      sirName: "Иванов",
+      name: "Иван",
+      patronymic: "Иванович",
     },
   ]);
 
@@ -31,9 +35,15 @@ function App() {
     <div className="App">
       <div>
         {" "}
-        {names.map((index, user) => (
-          <UserName key={index} index={index} user={user} />
+        {names.map((user, index) => (
+          <UserName
+            key={index}
+            index={index}
+            user={user}
+            removeUser={removeUser}
+          />
         ))}
+        <UserForm setNames={setNames} names={names} />
       </div>
     </div>
   );
