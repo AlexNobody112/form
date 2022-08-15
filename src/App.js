@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+
+const UserName = ({ user }) => {
+  return (
+    <div>
+      <h1>{user.sirname}</h1>
+      <h1>{user.name}</h1>
+      <h1>{user.patronymic}</h1>
+    </div>
+  );
+};
 
 function App() {
+  const [names, setNames] = useState([
+    {
+      sirname: "Фамилия",
+      name: "Имя",
+      patronymic: "Отчество",
+      hasForm: false,
+    },
+    {
+      sirname: "Фамилия",
+      name: "Имя",
+      patronymic: "Отчество",
+      hasForm: false,
+    },
+  ]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        {" "}
+        {names.map((index, user) => (
+          <UserName key={index} index={index} user={user} />
+        ))}
+      </div>
     </div>
   );
 }
