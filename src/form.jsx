@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 
-const UserForm = ({setNames, names}) => {
+const UserForm = ({ setNames, names }) => {
   const [sirName, setSirName] = useState("");
   const [name, setName] = useState("");
   const [patronymic, setPatronymic] = useState("");
+
+  const [hideForm, setHideForm] = useState(true);
+  const getDisabledForm = ({ disable }) => setHideForm(false);
 
   const addNewUser = (e) => {
     e.preventDefault();
@@ -16,7 +19,12 @@ const UserForm = ({setNames, names}) => {
 
     console.log(addedUser);
 
-    setNames([...names, addedUser]);
+    addedUser.sirName == "" ||
+    addedUser.name == "" ||
+    addedUser.patronymic == ""
+      ? alert("все поля обязательны для заполнения")
+      : setNames([...names, addedUser]);
+    console.log(addedUser);
 
     setSirName("");
     setName("");
@@ -24,27 +32,29 @@ const UserForm = ({setNames, names}) => {
   };
 
   return (
-    <form onSubmit={addNewUser}>
-      <input
-        type="text"
-        value={sirName}
-        onChange={(e) => setSirName(e.target.value)}
-      />
+    <div>
+      <form onSubmit={addNewUser}>
+        <input
+          type="text"
+          value={sirName}
+          onChange={(e) => setSirName(e.target.value)}
+        />
 
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
-      <input
-        type="text"
-        value={patronymic}
-        onChange={(e) => setPatronymic(e.target.value)}
-      />
+        <input
+          type="text"
+          value={patronymic}
+          onChange={(e) => setPatronymic(e.target.value)}
+        />
 
-      <button onClick={addNewUser}>Add new user</button>
-    </form>
+        <button onClick={addNewUser}>Add new user</button>
+      </form>
+    </div>
   );
 };
 

@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import "./App.css";
 import UserForm from "./form";
-
-const UserName = ({ user, index, removeUser }) => {
-  return (
-    <div style={{ display: "flex" }}>
-      <h1 className="app-item">{user.sirName}</h1>
-      <h1 className="app-item">{user.name}</h1>
-      <h1 className="app-item">{user.patronymic}</h1>
-      <button onClick={() => removeUser(index)} className="app-item-delete">
-        x
-      </button>
-    </div>
-  );
-};
+import UserName from "./UserName";
 
 function App() {
+  const [showForm, setShowForm] = useState(false);
+  // const [hideForm, setHideForm] = useState(true);
+
+  const getActiveForm = ({ active }) => setShowForm(true);
+  // const getDisabledForm = ({ disable }) => setHideForm(false);
+
   const removeUser = (index) => {
     const newUser = [...names];
     newUser.splice(index, 1);
@@ -43,7 +37,14 @@ function App() {
             removeUser={removeUser}
           />
         ))}
-        <UserForm setNames={setNames} names={names} />
+        {showForm ? (
+          <UserForm
+            setNames={setNames}
+            names={names}
+            // disable={getDisabledForm}
+          />
+        ) : null}
+        <button onClick={getActiveForm}>add new user</button>
       </div>
     </div>
   );
